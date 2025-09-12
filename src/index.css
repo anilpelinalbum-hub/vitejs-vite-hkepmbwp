@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply font-sans;
+  background: linear-gradient(180deg, #FEF5FA 0%, #FDECF2 100%);
+  color: #222;
+}
+
+/* Scrollbar gizleme */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Skeleton animasyonu */
+.skeleton {
+  animation: pulse 1.5s ease-in-out infinite;
+  background: #f3f3f3;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: .6; }
+  50% { opacity: 1; }
+}
+
+/* Performans iyileştirmeleri */
+.album-item {
+  will-change: transform;
+}
+
+/* Çok satırlı metin kesme */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Yumuşak geçişler için */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Erişilebilirlik için ekran okuyucu sınıfı */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Touch action için optimizasyon */
+.album-strip {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+/* Reduced motion için destek */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Koyu mod desteği */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%);
+    color: #fff;
+  }
+}
+
+/* Özel scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

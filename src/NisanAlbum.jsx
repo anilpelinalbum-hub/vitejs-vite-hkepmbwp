@@ -573,8 +573,8 @@ export default function NisanAlbum() {
           <div className="flex items-center gap-3">
             <LoadingSpinner size="small" />
             <div>
-              <p className="text-sm font-medium">Yükleniyor...</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-sm font-medium text-gray-800">Yükleniyor...</p>
+              <p className="text-xs text-gray-600">
                 {uploadQueue.length > 0 ? `Kuyrukta: ${uploadQueue.length}` : `${uploadProgress}% tamamlandı`}
               </p>
             </div>
@@ -760,77 +760,65 @@ export default function NisanAlbum() {
         )}
       </section>
 
-// NOT + İSİM MODAL kısmını şu şekilde güncelle:
-{showNoteModal && (
-  <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-    <div className="bg-white rounded-2xl p-6 shadow-xl w-full max-w-md">
-      <h3 className="text-lg font-semibold text-rose-600 text-center mb-4">
-        {randomPrompt}
-      </h3>
+      {/* NOT + İSİM MODAL */}
+      {showNoteModal && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-white rounded-2xl p-6 shadow-xl w-full max-w-md">
+            <h3 className="text-lg font-semibold text-rose-600 text-center mb-4">
+              {randomPrompt}
+            </h3>
 
-      <textarea
-        value={note}
-        onChange={(e) => setNote(e.target.value)}
-        placeholder="Notunuzu buraya yazın (opsiyonel)"
-        className="w-full border rounded-xl p-3 min-h-[90px] focus:ring-2 focus:ring-rose-400 outline-none mb-3 text-gray-800" // text-gray-800 eklendi
-        maxLength={500}
-      />
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Notunuzu buraya yazın (opsiyonel)"
+              className="w-full border rounded-xl p-3 min-h-[90px] focus:ring-2 focus:ring-rose-400 outline-none mb-3 text-gray-800"
+              maxLength={500}
+            />
 
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Adınızı yazın (opsiyonel)"
-        className="w-full border rounded-xl p-3 focus:ring-2 focus:ring-rose-400 outline-none text-gray-800" // text-gray-800 eklendi
-        maxLength={50}
-      />
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Adınızı yazın (opsiyonel)"
+              className="w-full border rounded-xl p-3 focus:ring-2 focus:ring-rose-400 outline-none text-gray-800"
+              maxLength={50}
+            />
 
-      {/* Progress bar */}
-      {uploading && (
-        <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
-          <div
-            className="bg-rose-500 h-2 rounded-full transition-all"
-            style={{ width: `${uploadProgress}%` }}
-          />
+            {/* Progress bar */}
+            {uploading && (
+              <div className="w-full bg-gray-200 rounded-full h-2 mt-4">
+                <div
+                  className="bg-rose-500 h-2 rounded-full transition-all"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+            )}
+
+            <div className="flex justify-between gap-3 mt-4">
+              <button
+                onClick={() => {
+                  setShowNoteModal(false);
+                  setPendingFiles([]);
+                  setNote("");
+                  setName("");
+                }}
+                className="flex-1 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition-colors disabled:opacity-50 text-gray-800"
+                disabled={uploading}
+              >
+                İptal
+              </button>
+              <button
+                onClick={handleUpload}
+                disabled={uploading}
+                className="flex-1 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white transition-colors disabled:opacity-50"
+              >
+                {uploading ? "Yükleniyor..." : "Gönder"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
-
-      <div className="flex justify-between gap-3 mt-4">
-        <button
-          onClick={() => {
-            setShowNoteModal(false);
-            setPendingFiles([]);
-            setNote("");
-            setName("");
-          }}
-          className="flex-1 py-2 rounded-xl bg-gray-200 hover:bg-gray-300 transition-colors disabled:opacity-50 text-gray-800" // text-gray-800 eklendi
-          disabled={uploading}
-        >
-          İptal
-        </button>
-        <button
-          onClick={handleUpload}
-          disabled={uploading}
-          className="flex-1 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white transition-colors disabled:opacity-50"
-        >
-          {uploading ? "Yükleniyor..." : "Gönder"}
-        </button>
-      </div>
     </div>
-  </div>
-)}
-
-// Yükleme durumu için detaylı geri bildirim kısmını şu şekilde güncelle:
-{(uploading || isUploading) && (
-  <div className="fixed bottom-4 right-4 bg-white p-4 rounded-lg shadow-lg z-50">
-    <div className="flex items-center gap-3">
-      <LoadingSpinner size="small" />
-      <div>
-        <p className="text-sm font-medium text-gray-800">Yükleniyor...</p> {/* text-gray-800 eklendi */}
-        <p className="text-xs text-gray-600"> {/* text-gray-600 olarak değiştirildi */}
-          {uploadQueue.length > 0 ? `Kuyrukta: ${uploadQueue.length}` : `${uploadProgress}% tamamlandı`}
-        </p>
-      </div>
-    </div>
-  </div>
-)}
+  );
+}
